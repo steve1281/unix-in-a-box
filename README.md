@@ -64,3 +64,11 @@ docker container stop test_sshd
 docker container rm test_sshd
 docker image rm eg_sshd
 ```
+
+## keygen
+```
+I used a key to simplify my ssh (I got tired of entering passwords).
+ssh-keygen  # into current directory
+then the Dockerfile will copy to correct location.
+```
+
