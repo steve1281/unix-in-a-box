@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 RUN apt-get update && apt-get install -y openssh-server
 RUN mkdir /var/run/sshd
@@ -10,6 +10,13 @@ RUN sed -i 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid
 
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
+
+RUN mkdir /root/.ssh
+COPY "id_rsa.pub" /root/.ssh/authorized_keys
+
+RUN mkdir /scripts
+COPY "${PWD}/scripts" /scripts
+CMD ["/scripts/simpleserver.py &"]
 
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
