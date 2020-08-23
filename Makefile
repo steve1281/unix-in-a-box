@@ -11,9 +11,10 @@ build:
 
 launch:
 	docker run -d \
-		-p 2222:22 -p 84:84 \
+		-p 2222:22 -p 84:84 -p 5000:443 \
 		--name test_sshd eg_sshd 
-	docker exec -d test_sshd /scripts/simpleserver.py
+	docker exec -d test_sshd /root/simpleserver.py
+	docker exec -d test_sshd openssl req -new -x509 -keyout server.pem -out server.pem -days 365 -nodes | echo -e "CA\n\n\n\n\n\n"
 
 inspect:
 	docker port test_sshd 22

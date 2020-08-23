@@ -1,5 +1,7 @@
 FROM ubuntu:18.04
 
+WORKDIR /root
+
 RUN apt-get update && apt-get install -y openssh-server
 RUN mkdir /var/run/sshd
 RUN echo 'root:password' | chpasswd
@@ -14,9 +16,12 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 RUN mkdir /root/.ssh
 COPY "id_rsa.pub" /root/.ssh/authorized_keys
 
-RUN mkdir /scripts
-COPY "${PWD}/scripts" /scripts
-CMD ["/scripts/simpleserver.py &"]
+COPY "${PWD}/scripts" /root
+# RUN openssl req -new -x509 -keyout server.pem -out server.pem -days 365 -nodes | echo -e "CA\n\n\n\n\n\n"
+# CMD ["./sslserver.py &"]
+# CMD ["./simpleserver.py &"]
+
 
 EXPOSE 22
+
 CMD ["/usr/sbin/sshd", "-D"]
