@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ "$1" = "/bic/control/skip_recovery" ]; then
+     echo "/bic/control/skip_rules/test_service=1"
+elif  [ "$1" = "/bic/master" ]; then
+     echo "/bic/master/lock-0000000000=\"127.0.0.1:4998\""
+else
+     echo $1
+fi

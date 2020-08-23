@@ -16,11 +16,10 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 RUN mkdir /root/.ssh
 COPY "id_rsa.pub" /root/.ssh/authorized_keys
 
-COPY "${PWD}/scripts" /root
-# RUN openssl req -new -x509 -keyout server.pem -out server.pem -days 365 -nodes | echo -e "CA\n\n\n\n\n\n"
-# CMD ["./sslserver.py &"]
-# CMD ["./simpleserver.py &"]
+RUN mkdir /usr/lib/nimbula
+COPY "${PWD}/scripts/zk*" /usr/lib/nimbula/
 
+COPY "${PWD}/scripts" /root
 
 EXPOSE 22
 

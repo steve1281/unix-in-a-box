@@ -36,7 +36,8 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
              self.end_headers()
              self.wfile.write(b'{"error":"Not Found"}')
 
-httpd = HTTPServer(('localhost', 443), SimpleHTTPRequestHandler)
+# note: don't bind to localhost(or 127.0.0.1) when using docker; use 0.0.0.0 instead.
+httpd = HTTPServer(('0.0.0.0', 443), SimpleHTTPRequestHandler)
 httpd.socket = ssl.wrap_socket (httpd.socket, certfile='./server.pem',
 server_side=True)
 httpd.serve_forever()
